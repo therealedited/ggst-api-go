@@ -5,6 +5,7 @@ import (
 )
 
 func main() {
-	tests.Test1()
-	tests.Test2()
+	//tests.Test1()
+	//tests.Test2()
+	tests.Test3()
 }

@@ -2,7 +2,7 @@ package internal
 
 //Thanks https://github.com/optix2000/totsugeki
 
-type RequestHeader struct {
+type POSTRequestHeader struct {
 	_msgpack struct{} `msgpack:",as_array"`
 	PlayerID string
 	Token    string
@@ -19,7 +19,7 @@ type GameData struct {
 	JsonData map[string]interface{}
 }
 
-type EnvPayload struct {
+type POSTEnvPayload struct {
 	_msgpack struct{} `msgpack:",as_array"`
 	Unknown4 int      // 256
 }
@@ -33,17 +33,48 @@ type EnvAnswer struct {
 	Link string
 }
 
-type LoginPayload struct {
+type POSTLoginPayload struct {
+	_msgpack    struct{} `msgpack:",as_array"`
+	Unknown1    int
+	SteamID     string
+	SteamID_hex string
+	Unknown2    int
+	Unknown3    string
 }
 
-type StriveInitPacket struct {
-	_msgpack struct{} `msgpack:",as_array"`
-	Header   RequestHeader
-	Payload  EnvPayload
+type ReplayQuery struct {
+	Unknown1           int
+	PlayerSearch       int
+	MinFloor           int
+	MaxFloor           int
+	Seq                []int
+	Char1              int
+	Char2              int
+	Winner             int
+	PrioritizeBestBout int
+	Unknown2           int
 }
 
-type StriveLoginPacket struct {
+type POSTReplayPayload struct {
+	_msgpack      struct{} `msgpack:",as_array"`
+	Unknown1      int
+	Index         int
+	ReplayPerPage int
+	Query         ReplayQuery
+}
+
+type POSTStriveInitPacket struct {
 	_msgpack struct{} `msgpack:",as_array"`
-	Header   RequestHeader
-	Payload  LoginPayload
+	Header   POSTRequestHeader
+	Payload  POSTEnvPayload
+}
+
+type POSTStriveLoginPacket struct {
+	Header  POSTRequestHeader
+	Payload POSTLoginPayload
+}
+
+type POSTStriveReplayPacket struct {
+	Header  POSTRequestHeader
+	Payload POSTReplayPayload
 }
